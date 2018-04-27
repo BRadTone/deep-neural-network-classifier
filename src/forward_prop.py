@@ -17,14 +17,14 @@ def model_forward(X, parameters):
         A_prev = A
         W = parameters['W' + str(l)]
         b = parameters['b' + str(l)]
-
         A, cache = forward(A_prev, W, b, ActivationFns.relu)
         caches.append(cache)
 
     AL, cache = forward(A, parameters['W' + str(L)], parameters['b' + str(L)], ActivationFns.sigmoid)
     caches.append(cache)
 
-    assert (AL.shape == (1, X.shape[1]))
+    #  todo zmien 10 na rozmiar output layer
+    assert (AL.shape == (10, X.shape[1]))
 
     return AL, caches
 
@@ -41,6 +41,7 @@ def forward(A_prev, W, b, activation):
     A -- the output of the activation function, also called the post-activation value
     cache -- a python dictionary containing "linear_cache" and "activation_cache"
     """
+
     assert (hasattr(activation, '__call__'))
 
     Z = np.dot(W, A_prev) + b

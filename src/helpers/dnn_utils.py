@@ -9,25 +9,25 @@ class ActivationFns:
     def sigmoid(Z):
         A = 1 / (1 + np.exp(-Z))
 
-        return A, Z
+        print('type of A',type(A))
+        return A
 
     @staticmethod
     def relu(Z):
         A = np.maximum(0, Z)
-
         return A
 
     @staticmethod
     def leaky_relu(Z, slope=0.01):
         A = np.maximum(Z * slope, Z)
 
-        return A, Z
+        return A
 
     @staticmethod
     def tanh(Z):
         A = np.tanh(Z)
 
-        return A, Z
+        return A
 
 
 class dActivationFns:
