@@ -2,7 +2,6 @@ import numpy as np
 
 
 def update_params(params, grads, learning_rate):
-
     L = len(params) // 2
 
     for l in range(L):
@@ -22,8 +21,8 @@ def cost_fn(AL, Y):
     cost -- cross-entropy cost
     """
     m = Y.shape[1]
-    cost = -1/m * np.sum(Y * np.log(AL) + (1-Y) * np.log(1- AL))
+    cost = -1 / m * np.sum(Y * np.log(AL) + (1 - Y) * np.log(1 - AL))
     cost = np.squeeze(cost)
-    assert(cost.shape == ())
+    assert (cost.shape == ())
 
     return cost

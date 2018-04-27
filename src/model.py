@@ -1,3 +1,7 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from timeit import default_timer as timer
+
 from src.init_params import init_params
 from src.forward_prop import model_forward
 from src.back_prop import model_back_prop
@@ -26,8 +30,9 @@ def model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 3000, weig
     params = init_params(layers_dims, weight_scale)
 
     # Loop (gradient descent)
+    # todo: decorator for time mesaurement
+    start = timer()
     for i in range(0, num_iterations):
-
         AL, caches = model_forward(X, params)
 
         cost = cost_fn(AL, Y)
@@ -38,15 +43,17 @@ def model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 3000, weig
 
         # Print the cost every 100 training example
         if print_cost and i % 5 == 0:
-            print ("Cost after iteration %i: %f" %(i, cost))
+            end = timer()
+            print ("Cost after iteration %i: %f" %(i, cost), 'and it took: ', round(end-start, 2), 's')
             costs.append(cost)
 
 
-    # # plot the cost
-    # plt.plot(np.squeeze(costs))
-    # plt.ylabel('cost')
-    # plt.xlabel('iterations (per tens)')
-    # plt.title("Learning rate =" + str(learning_rate))
-    # plt.show()
+
+    # plot the cost
+    plt.plot(np.squeeze(costs))
+    plt.ylabel('cost')
+    plt.xlabel('iterations (per tens)')
+    plt.title("Learning rate =" + str(learning_rate))
+    plt.show()
     return params
 
