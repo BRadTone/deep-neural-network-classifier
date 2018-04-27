@@ -37,7 +37,7 @@ def model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 3000, weig
         params = update_params(params, grads, learning_rate)
 
         # Print the cost every 100 training example
-        if print_cost and i % 100 == 0:
+        if print_cost and i % 5 == 0:
             print ("Cost after iteration %i: %f" %(i, cost))
             costs.append(cost)
 
@@ -48,5 +48,5 @@ def model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 3000, weig
     # plt.xlabel('iterations (per tens)')
     # plt.title("Learning rate =" + str(learning_rate))
     # plt.show()
-
     return params
+

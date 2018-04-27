@@ -9,7 +9,6 @@ class ActivationFns:
     def sigmoid(Z):
         A = 1 / (1 + np.exp(-Z))
 
-        print('type of A',type(A))
         return A
 
     @staticmethod

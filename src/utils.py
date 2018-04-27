@@ -21,7 +21,6 @@ def cost_fn(AL, Y):
     Returns:
     cost -- cross-entropy cost
     """
-    print(Y.shape)
     m = Y.shape[1]
     cost = -1/m * np.sum(Y * np.log(AL) + (1-Y) * np.log(1- AL))
     cost = np.squeeze(cost)
