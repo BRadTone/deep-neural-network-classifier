@@ -37,7 +37,7 @@ def linear_activation_backward(dA, cache, activation):
     return dA_prev, dW, db
 
 
-def back_prop(AL, Y, caches):
+def model_back_prop(AL, Y, caches):
     """
     Arguments:
     AL -- probability vector, output of the forward propagation
@@ -70,13 +70,3 @@ def back_prop(AL, Y, caches):
 
     return grads
 
-
-def update_params(params, grads, learning_rate):
-
-    L = len(params) // 2
-
-    for l in range(L):
-        params["W" + str(l + 1)] -= learning_rate * grads["dW" + str(l + 1)]
-        params["b" + str(l + 1)] -= learning_rate * grads["db" + str(l + 1)]
-
-    return params
