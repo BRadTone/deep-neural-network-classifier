@@ -8,7 +8,7 @@ from src.back_prop import model_back_prop
 from src.utils import cost_fn, update_params
 
 
-def model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 3000, weight_scale=0.01, print_cost=False):
+def model(X, Y, layers_dims, learning_rate=0.0075, epochs=3000, weight_scale=0.01, print_cost=False):
     """
     Arguments:
     X -- training_data
@@ -32,7 +32,7 @@ def model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 3000, weig
     # Loop (gradient descent)
     # todo: decorator for time mesaurement
     start = timer()
-    for i in range(0, num_iterations):
+    for i in range(0, epochs):
         AL, caches = model_forward(X, params)
 
         cost = cost_fn(AL, Y)
@@ -44,10 +44,8 @@ def model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 3000, weig
         # Print the cost every 100 training example
         if print_cost and i % 5 == 0:
             end = timer()
-            print ("Cost after iteration %i: %f" %(i, cost), 'and it took: ', round(end-start, 2), 's')
+            print("Cost after iteration %i: %f" % (i, cost), 'and it took: ', round(end - start, 2), 's')
             costs.append(cost)
-
-
 
     # plot the cost
     plt.plot(np.squeeze(costs))
@@ -56,4 +54,3 @@ def model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 3000, weig
     plt.title("Learning rate =" + str(learning_rate))
     plt.show()
     return params
-
