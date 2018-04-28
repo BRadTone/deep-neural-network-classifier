@@ -29,7 +29,7 @@ y = np.zeros((10, m))
 y[train_y.reshape(1, m) - 1, np.arange(m)] = 1
 
 hyp_params = {
-    'epochs': 4,
+    'epochs': 500,
     'learning_rate': 0.1,
     'layers_dims': [28 * 28, 10, 10],
     'print_cost': True

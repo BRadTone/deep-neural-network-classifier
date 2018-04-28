@@ -8,6 +8,7 @@ from src.back_prop import model_back_prop
 from src.utils import cost_fn, update_params
 
 
+# todo: decorator for time benchmark, decorator for plotting when iterating
 def model(X, Y, layers_dims, learning_rate=0.0075, epochs=3000, weight_scale=0.01, print_cost=False):
     """
     Arguments:
@@ -29,8 +30,14 @@ def model(X, Y, layers_dims, learning_rate=0.0075, epochs=3000, weight_scale=0.0
 
     params = init_params(layers_dims, weight_scale)
 
+    plt.ion()
+    plt.plot(np.squeeze(costs))
+    plt.ylabel('cost')
+    plt.xlabel('iterations (per tens)')
+    plt.title("Learning rate =" + str(learning_rate))
+    plt.draw()
+
     # Loop (gradient descent)
-    # todo: decorator for time mesaurement
     start = timer()
     for i in range(0, epochs):
         AL, caches = model_forward(X, params)
@@ -41,16 +48,15 @@ def model(X, Y, layers_dims, learning_rate=0.0075, epochs=3000, weight_scale=0.0
 
         params = update_params(params, grads, learning_rate)
 
-        # Print the cost every 100 training example
+        # Print and plot cost
         if print_cost and i % 5 == 0:
             end = timer()
             print("Cost after iteration %i: %f" % (i, cost), 'and it took: ', round(end - start, 2), 's')
             costs.append(cost)
 
-    # plot the cost
-    plt.plot(np.squeeze(costs))
-    plt.ylabel('cost')
-    plt.xlabel('iterations (per tens)')
-    plt.title("Learning rate =" + str(learning_rate))
-    plt.show()
+            plt.plot(costs)
+            plt.draw()
+            plt.pause(0.1)
+            plt.clf()
+
     return params
