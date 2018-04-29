@@ -1,4 +1,5 @@
 import numpy as np
+from forward_prop import model_forward
 
 
 def update_params(params, grads, learning_rate):
@@ -26,3 +27,7 @@ def cost_fn(AL, Y):
     assert (cost.shape == ())
 
     return cost
+
+
+def predict(x, params):
+    return model_forward(x, params)

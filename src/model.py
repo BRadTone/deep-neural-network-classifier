@@ -49,12 +49,12 @@ def model(X, Y, layers_dims, learning_rate=0.0075, epochs=3000, weight_scale=0.0
         params = update_params(params, grads, learning_rate)
 
         # Print and plot cost
-        if print_cost and i % 5 == 0:
+        if print_cost and i % 3 == 0:
             end = timer()
             print("Cost after iteration %i: %f" % (i, cost), 'and it took: ', round(end - start, 2), 's')
             costs.append(cost)
 
-            plt.plot(costs)
+            plt.plot(np.squeeze(costs))
             plt.draw()
             plt.pause(0.1)
             plt.clf()
