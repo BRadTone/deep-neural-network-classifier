@@ -2,39 +2,43 @@ import os
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
-from tests.mnist import test_x, test_y
-from src.utils import predict
-from tests.helpers import normalize
-
+from tests.mnist import test_x, test_y, train_y, train_x
+from tests.utils import normalize, predict
 from src.utils import cost_fn
 
-path = '../datasets/mnist/model-alpha-0.18-iterations-2500-layers-3.pickle'
+base_path = '../datasets/mnist'
+path = base_path + '/model-alpha-0.1-iterations-2000-layers-3.pickle'
 params = {}
 if os.path.isfile(path):
-    params = pickle.load(open(path, 'rb'))
+    params, costs = pickle.load(open(path, 'rb'))
 
-idx = 0
-
-# x = normalize(test_x[idx]).reshape((784, 1))
-# aL, _ = predict(x, params)
-# print(np.argmax(aL))
-# print(test_y[idx])
+m = train_x.shape[0]
 m_test = test_x.shape[0]
 
-test_Y_v = np.zeros((10, m_test))
-test_Y_v[test_y.reshape(1, m_test), np.arange(m_test)] = 1
+Y = np.zeros((10, m))
+Y_test = np.zeros((10, m_test))
+Y[train_y.reshape(1, m), np.arange(m)] = 1
+Y_test[test_y.reshape(1, m_test), np.arange(m_test)] = 1
 
-# todo: import mean and std from training
-x = normalize(test_x.reshape((784, m_test)))
-AL, _ = predict(x, params)
-cost = cost_fn(AL, test_Y_v)
-# print(np.argmax(AL[0][0]))
-AL = np.argmax(AL, axis=0).reshape(1, m_test)
-test_y = test_y.reshape(1, m_test)
-diff = AL == test_y
+X = normalize(train_x)
+X_test = normalize(test_x)
 
+AL = predict(X.T, params)
+AL_test = predict(X_test.T, params)
 
-print(cost)
-# print(np.sum(diff))
+AL_test_1D = np.argmax(AL_test, axis=0).reshape(1, m_test)
+Y_test_1D = test_y.reshape(1, m_test)
+
+diff = AL_test_1D == Y_test_1D
+
+accuracy_test = np.sum(diff) / m_test
+print(accuracy_test)
+
+idx = 444
+aL = predict(X[idx].reshape(784, 1), params)
+
+cost_train = cost_fn(AL, Y)
+cost_test = cost_fn(AL_test, Y_test)
+
 # plt.imshow(test_x[idx].reshape((28, 28)))
 # plt.show()

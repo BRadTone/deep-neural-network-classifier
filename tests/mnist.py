@@ -5,7 +5,7 @@ import pickle
 import numpy as np
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
-from tests.helpers import pickle_model, normalize
+from tests.utils import pickle_model, normalize
 from src.model import model
 
 # load data
@@ -16,13 +16,8 @@ train_x, train_y = train_set
 valid_x, valid_y = valid_set
 test_x, test_y = test_set
 
-# show image
-# img_idx = 23
-# plt.imshow(train_x[img_idx].reshape((28, 28)), cmap=cm.Greys_r)
-# plt.show()
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     m = train_x.shape[0]
     m_test = test_x.shape[0]
 

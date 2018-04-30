@@ -64,4 +64,4 @@ def model(X, Y, X_test, Y_test, layers_dims, learning_rate=0.0075, epochs=3000, 
             plt.pause(0.1)
             plt.clf()
 
-    return params, (cost, cost_test)
+    return params, (costs, costs_test)

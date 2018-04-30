@@ -1,6 +1,4 @@
 import numpy as np
-from forward_prop import model_forward
-
 
 def update_params(params, grads, learning_rate):
     L = len(params) // 2
@@ -29,5 +27,3 @@ def cost_fn(AL, Y):
     return cost
 
 
-def predict(x, params):
-    return model_forward(x, params)
