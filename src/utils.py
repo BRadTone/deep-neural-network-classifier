@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def update_params(params, grads, learning_rate):
     L = len(params) // 2
 
@@ -11,6 +12,7 @@ def update_params(params, grads, learning_rate):
 
 
 def cost_fn(AL, Y):
+    assert AL.shape == Y.shape
     """
     Arguments:
     AL -- probability vector corresponding to your label predictions
@@ -25,5 +27,3 @@ def cost_fn(AL, Y):
     assert (cost.shape == ())
 
     return cost
-
-
