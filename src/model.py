@@ -9,7 +9,7 @@ from src.utils import cost_fn, update_params
 
 
 # todo: decorator for time benchmark, decorator for plotting when iterating
-def model(X, Y, X_test, Y_test,layers_dims, learning_rate=0.0075, epochs=3000, weight_scale=0.01, print_cost=False):
+def model(X, Y, X_test, Y_test, layers_dims, learning_rate=0.0075, epochs=3000, weight_scale=0.01, print_cost=False):
     """
     Arguments:
     X -- training_data
@@ -49,7 +49,7 @@ def model(X, Y, X_test, Y_test,layers_dims, learning_rate=0.0075, epochs=3000, w
         params = update_params(params, grads, learning_rate)
 
         # Print and plot cost
-        if print_cost and i % 10 == 0:
+        if print_cost and i % 2 == 0:
             AL_test, _ = model_forward(X_test, params)
             cost_test = cost_fn(AL_test, Y_test)
 
@@ -64,4 +64,4 @@ def model(X, Y, X_test, Y_test,layers_dims, learning_rate=0.0075, epochs=3000, w
             plt.pause(0.1)
             plt.clf()
 
-    return params
+    return params, (cost, cost_test)

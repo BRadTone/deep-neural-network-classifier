@@ -37,15 +37,15 @@ if __name__ == "__main__":
     X_test = normalize(test_x)
 
     hyp_params = {
-        'epochs': 2500,
-        'learning_rate': 0.18,
-        'layers_dims': [28 * 28, 100, 100, 10],
+        'epochs': 2000,
+        'learning_rate': 0.1,
+        'layers_dims': [28 * 28, 50, 50, 10],
         'print_cost': True
     }
 
     model = model(X.T, Y, X_test.T, Y_test, **hyp_params)
 
     pickle_name = '../datasets/mnist/model-alpha-{0}-iterations-{1}-layers-{2}.pickle' \
-        .format(hyp_params['learning_rate'], hyp_params['epochs'], len(hyp_params['layers_dims']) - 1)
+        .format(hyp_params['learning_rate'], hyp_params['epochs'], str(hyp_params['layers_dims']))
 
     pickle_model(pickle_name, model)
