@@ -9,7 +9,7 @@ from src.utils import cost_fn, update_params
 
 
 # todo: decorator for time benchmark, decorator for plotting when iterating
-def model(X, Y, X_test, Y_test, layers_dims, learning_rate=0.0075, epochs=3000, weight_scale=0.01, print_cost=False):
+def model(X, Y, X_valid, Y_valid, layers_dims, learning_rate=0.0075, epochs=3000, weight_scale=0.01, print_cost=False):
     """
     Arguments:
     X -- training_data
@@ -27,7 +27,7 @@ def model(X, Y, X_test, Y_test, layers_dims, learning_rate=0.0075, epochs=3000, 
     """
 
     costs = []
-    costs_test = []
+    costs_valid = []
     params = init_params(layers_dims, weight_scale)
 
     plt.ion()
@@ -50,18 +50,17 @@ def model(X, Y, X_test, Y_test, layers_dims, learning_rate=0.0075, epochs=3000, 
 
         # Print and plot cost
         if print_cost and i % 2 == 0:
-            AL_test, _ = model_forward(X_test, params)
-            cost_test = cost_fn(AL_test, Y_test)
-
             end = timer()
+            AL_test, _ = model_forward(X_valid, params)
+
             print("Cost after iteration %i: %f" % (i, cost), 'and it took: ', round(end - start, 2), 's')
             costs.append(cost)
-            costs_test.append(cost_test)
+            costs_valid.append(cost_fn(AL_test, Y_valid))
 
-            plt.plot(np.squeeze(costs), label='train')
-            plt.plot(np.squeeze(costs_test), label='test')
+            plt.plot(np.squeeze(costs), label='train', color='r')
+            plt.plot(np.squeeze(costs_valid), label='test', color='b')
             plt.draw()
             plt.pause(0.1)
-            plt.clf()
+            # plt.clf()
 
-    return params, (costs, costs_test)
+    return params, (costs, costs_valid)

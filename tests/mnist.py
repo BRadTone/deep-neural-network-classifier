@@ -23,13 +23,13 @@ if __name__ == '__main__':
 
     # map train_y to output vector
     Y = np.zeros((10, m))
-    Y_test = np.zeros((10, m_test))
+    Y_valid = np.zeros((10, m_test))
 
     Y[train_y.reshape(1, m), np.arange(m)] = 1
-    Y_test[test_y.reshape(1, m_test), np.arange(m_test)] = 1
+    Y_valid[test_y.reshape(1, m_test), np.arange(m_test)] = 1
 
     X = normalize(train_x)
-    X_test = normalize(test_x)
+    X_valid = normalize(test_x)
 
     hyp_params = {
         'epochs': 2000,
@@ -38,7 +38,7 @@ if __name__ == '__main__':
         'print_cost': True
     }
 
-    model = model(X.T, Y, X_test.T, Y_test, **hyp_params)
+    model = model(X.T, Y, X_valid.T, Y_valid, **hyp_params)
 
     pickle_name = '../datasets/mnist/model-alpha-{0}-iterations-{1}-layers-{2}.pickle' \
         .format(hyp_params['learning_rate'], hyp_params['epochs'], str(hyp_params['layers_dims']))
