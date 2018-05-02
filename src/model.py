@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from timeit import default_timer as timer
 
-from src.init_params import init_params
+from src.init_params import Initializers
 from src.forward_prop import model_forward
 from src.back_prop import model_back_prop
 from src.utils import cost_fn, update_params
@@ -12,7 +12,7 @@ plt.style.use('Solarize_Light2')
 
 
 # todo: decorator for time benchmark, decorator for plotting when iterating
-def model(X, Y, X_valid, Y_valid, layers_dims, learning_rate=0.0075, epochs=3000, weight_scale=0.01, print_cost=False):
+def model(X, Y, X_valid, Y_valid, layers_dims, learning_rate=0.0075, epochs=3000, print_cost=False):
     """
     Arguments:
     X -- training_data
@@ -31,12 +31,9 @@ def model(X, Y, X_valid, Y_valid, layers_dims, learning_rate=0.0075, epochs=3000
 
     costs = []
     costs_valid = []
-    params = init_params(layers_dims, weight_scale)
-
-    plt.ion()
 
     plt.ylabel('cost')
-    plt.xlabel('iterations (per tens)')
+    plt.xlabel('iterations (per hundreds)')
     plt.title("Learning rate =" + str(learning_rate))
 
     costs_line, = plt.plot(costs, [], 'r', label='training set')
@@ -45,6 +42,8 @@ def model(X, Y, X_valid, Y_valid, layers_dims, learning_rate=0.0075, epochs=3000
     ax = plt.gca()
     ax.grid()
     ax.legend()
+
+    params = Initializers.xavier(layers_dims)
     # Loop (gradient descent)
     start = timer()
     for i in range(0, epochs):
@@ -57,13 +56,13 @@ def model(X, Y, X_valid, Y_valid, layers_dims, learning_rate=0.0075, epochs=3000
         params = update_params(params, grads, learning_rate)
 
         # Print and plot cost
-        if print_cost and i % 1 == 0:
+        if print_cost and i % 100 == 0:
             end = timer()
-            AL_test, _ = model_forward(X_valid, params)
+            AL_valid, _ = model_forward(X_valid, params)
 
-            print('Cost after iteration {0}: {1}, after {2}s.'.format(i, round(cost, 4), round(end - start, 1)))
+            print('Cost after iteration {}: {}, after {}s.'.format(i, round(cost, 4), round(end - start, 1)))
             costs.append(cost)
-            costs_valid.append(cost_fn(AL_test, Y_valid))
+            costs_valid.append(cost_fn(AL_valid, Y_valid))
 
             range_ = np.arange(len(costs))
             costs_line.set_data(range_, costs)
@@ -71,7 +70,7 @@ def model(X, Y, X_valid, Y_valid, layers_dims, learning_rate=0.0075, epochs=3000
 
             ax.relim()
             ax.autoscale_view()
+            plt.pause(.001)
             plt.draw()
-            plt.pause(5)
 
     return params, (costs, costs_valid)
