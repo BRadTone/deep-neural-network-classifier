@@ -34,7 +34,7 @@ if __name__ == '__main__':
     hyp_params = {
         'epochs': 2000,
         'learning_rate': 0.1,
-        'layers_dims': [28 * 28, 50, 50, 10],
+        'layers_dims': [28 * 28, 10],
         'print_cost': True
     }
 

@@ -7,6 +7,9 @@ from src.forward_prop import model_forward
 from src.back_prop import model_back_prop
 from src.utils import cost_fn, update_params
 
+plt.rcParams.update({'font.size': 7})
+plt.style.use('Solarize_Light2')
+
 
 # todo: decorator for time benchmark, decorator for plotting when iterating
 def model(X, Y, X_valid, Y_valid, layers_dims, learning_rate=0.0075, epochs=3000, weight_scale=0.01, print_cost=False):
@@ -31,12 +34,17 @@ def model(X, Y, X_valid, Y_valid, layers_dims, learning_rate=0.0075, epochs=3000
     params = init_params(layers_dims, weight_scale)
 
     plt.ion()
-    plt.plot(np.squeeze(costs))
+
     plt.ylabel('cost')
     plt.xlabel('iterations (per tens)')
     plt.title("Learning rate =" + str(learning_rate))
-    plt.draw()
 
+    costs_line, = plt.plot(costs, [], 'r', label='training set')
+    costs_valid_line, = plt.plot(costs_valid, [], 'b--', label='cross validation set')
+
+    ax = plt.gca()
+    ax.grid()
+    ax.legend()
     # Loop (gradient descent)
     start = timer()
     for i in range(0, epochs):
@@ -49,18 +57,21 @@ def model(X, Y, X_valid, Y_valid, layers_dims, learning_rate=0.0075, epochs=3000
         params = update_params(params, grads, learning_rate)
 
         # Print and plot cost
-        if print_cost and i % 2 == 0:
+        if print_cost and i % 1 == 0:
             end = timer()
             AL_test, _ = model_forward(X_valid, params)
 
-            print("Cost after iteration %i: %f" % (i, cost), 'and it took: ', round(end - start, 2), 's')
+            print('Cost after iteration {0}: {1}, after {2}s.'.format(i, round(cost, 4), round(end - start, 1)))
             costs.append(cost)
             costs_valid.append(cost_fn(AL_test, Y_valid))
 
-            plt.plot(np.squeeze(costs), label='train', color='r')
-            plt.plot(np.squeeze(costs_valid), label='test', color='b')
+            range_ = np.arange(len(costs))
+            costs_line.set_data(range_, costs)
+            costs_valid_line.set_data(range_, costs_valid)
+
+            ax.relim()
+            ax.autoscale_view()
             plt.draw()
-            plt.pause(0.1)
-            # plt.clf()
+            plt.pause(5)
 
     return params, (costs, costs_valid)
