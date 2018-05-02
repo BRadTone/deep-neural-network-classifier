@@ -36,7 +36,7 @@ def model(X, Y, X_valid, Y_valid, layers_dims, learning_rate=0.0075, epochs=3000
     plt.ion()
 
     plt.ylabel('cost')
-    plt.xlabel('iterations (per tens)')
+    plt.xlabel('iterations (per 2)')
     plt.title("Learning rate =" + str(learning_rate))
 
     costs_line, = plt.plot(costs, [], 'r', label='training set')
@@ -57,7 +57,7 @@ def model(X, Y, X_valid, Y_valid, layers_dims, learning_rate=0.0075, epochs=3000
         params = update_params(params, grads, learning_rate)
 
         # Print and plot cost
-        if print_cost and i % 1 == 0:
+        if print_cost and i % 2 == 0:
             end = timer()
             AL_test, _ = model_forward(X_valid, params)
 
@@ -72,6 +72,6 @@ def model(X, Y, X_valid, Y_valid, layers_dims, learning_rate=0.0075, epochs=3000
             ax.relim()
             ax.autoscale_view()
             plt.draw()
-            plt.pause(5)
+            plt.pause(.1)
 
     return params, (costs, costs_valid)
