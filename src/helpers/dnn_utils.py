@@ -29,7 +29,7 @@ class ActivationFns:
         return A
 
 
-class dActivationFns:
+class ActivationFnsDerivatives:
     def __init__(self):
         pass
 

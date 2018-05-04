@@ -1,5 +1,5 @@
 import numpy as np
-from src.helpers.dnn_utils import dActivationFns
+from src.helpers.dnn_utils import ActivationFnsDerivatives
 
 
 def linear_backward(dZ, cache):
@@ -58,12 +58,12 @@ def model_back_prop(AL, Y, caches):
 
     current_cache = caches[len(caches) -1]
 
-    grads["dA" + str(L-1)], grads["dW" + str(L)], grads["db" + str(L)] = linear_activation_backward(dAL, current_cache, dActivationFns.sigmoid)
+    grads["dA" + str(L-1)], grads["dW" + str(L)], grads["db" + str(L)] = linear_activation_backward(dAL, current_cache, ActivationFnsDerivatives.sigmoid)
 
     # Loop from l=L-2 to l=0
     for l in reversed(range(L-1)):
         current_cache = caches[l]
-        dA_prev_temp, dW_temp, db_temp = linear_activation_backward(grads["dA" + str(l + 1)], current_cache, dActivationFns.relu)
+        dA_prev_temp, dW_temp, db_temp = linear_activation_backward(grads["dA" + str(l + 1)], current_cache, ActivationFnsDerivatives.relu)
         grads["dA" + str(l)] = dA_prev_temp
         grads["dW" + str(l + 1)] = dW_temp
         grads["db" + str(l + 1)] = db_temp

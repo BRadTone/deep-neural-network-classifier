@@ -2,9 +2,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 from timeit import default_timer as timer
 
-from src.init_params import Initializers
+from src.Initializers import Initializers
 from src.forward_prop import model_forward
 from src.back_prop import model_back_prop
+
+from src.decorators import time_it
 from src.utils import cost_fn, update_params
 
 plt.rcParams.update({'font.size': 7})
