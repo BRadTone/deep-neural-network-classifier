@@ -1,10 +1,8 @@
 import os
 import pickle
-import numpy as np
-import matplotlib.pyplot as plt
-from tests.mnist import test_x, test_y, train_y, train_x
+from tests.mnist import test_x, test_y
 from tests.utils import normalize, predict, accuracy, ints_to_binary_vec
-from src.utils import cost_fn
+from src_old_functional.utils import cost_fn
 
 base_path = '../datasets/mnist'
 path = base_path + '/model-alpha-0.1-iterations-2000-layers-3.pickle'

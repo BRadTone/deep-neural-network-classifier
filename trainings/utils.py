@@ -1,6 +1,6 @@
 import pickle
 import numpy as np
-from src.forward_prop import model_forward
+from src.ForwardProp import ForwardProp
 
 
 def pickle_model(path, model):
@@ -13,9 +13,9 @@ def normalize(x):
 
 
 def predict(x, params):
-    AL, _ = model_forward(x, params)
-
-    return AL
+    AL, _ = ForwardProp.model_forward(x, params)
+    AL_exps = np.exp(AL)
+    return AL_exps / np.sum(AL_exps, axis=0)
 
 
 def accuracy(x, y, params):
