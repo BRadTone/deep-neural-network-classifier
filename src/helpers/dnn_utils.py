@@ -2,9 +2,6 @@ import numpy as np
 
 
 class ActivationFns:
-    def __init__(self):
-        pass
-
     @staticmethod
     def sigmoid(Z):
         A = 1 / (1 + np.exp(-Z))
@@ -30,9 +27,6 @@ class ActivationFns:
 
 
 class ActivationFnsDerivatives:
-    def __init__(self):
-        pass
-
     @staticmethod
     def sigmoid(dA, Z):
         s = 1 / (1 + np.exp(-Z))
@@ -44,7 +38,7 @@ class ActivationFnsDerivatives:
 
     @staticmethod
     def relu(dA, Z):
-        dZ = np.array(dA, copy=True)  # just converting dz to a correct object.
+        dZ = np.array(dA, copy=True)
         dZ[Z <= 0] = 0
 
         assert (dZ.shape == Z.shape)
@@ -53,7 +47,7 @@ class ActivationFnsDerivatives:
 
     @staticmethod
     def leaky_relu(dA, Z, slope=0.01):
-        dZ = np.array(dA, copy=True)  # just converting dz to a correct object.
+        dZ = np.array(dA, copy=True)
         dZ[Z <= 0] = slope
 
         assert (dZ.shape == Z.shape)

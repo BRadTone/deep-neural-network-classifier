@@ -17,10 +17,11 @@ class Model:
         if layers_dims:
             self.init_params(initializer)
 
-    def predict(self):
+    def predict(self, X):
+        # will return soft max normalized output vector
         pass
 
-    def train(self):
+    def train(self, X, Y):
         pass
 
     def forward_prop(self, X):
@@ -66,8 +67,22 @@ class Model:
 
         return A, cache
 
-    def cost(self):
-        pass
+    def cost(self, AL, Y):
+        """
+        Arguments:
+        AL -- probability vector corresponding to your label predictions
+        Y -- true "label" vector
+
+        Returns:
+        cost -- cross-entropy cost
+        """
+        assert AL.shape == Y.shape
+
+        m = Y.shape[1]
+        cost = -1 / m * np.sum(Y * np.log(AL) + (1 - Y) * np.log(1 - AL))
+        cost = np.squeeze(cost)
+
+        return cost
 
     def back_prop(self):
         pass
@@ -100,7 +115,3 @@ class Model:
             layer_units = self.params['W' + str(i)].shape[0]
             self.layers_dims.append(layer_units)
         assert len(self.layers_dims) - 1 == len(self.params) // 2
-
-
-
-
