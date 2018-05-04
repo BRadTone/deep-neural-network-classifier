@@ -11,7 +11,7 @@ class Model:
     ForwardProp = ForwardProp
     BackProp = BackProp
 
-    def __init__(self, layers_dims=None, initializer=Initializers.he):
+    def __init__(self, layers_dims, initializer=Initializers.he):
         self.params = []
         self.layers_dims = layers_dims
 
@@ -37,6 +37,10 @@ class Model:
 
             self.update_params(grads, learning_rate)
 
+            # todo: per n iterations
+            # todo: plot same as in functional model
+            # todo: allow X_valid,
+            # todo: save cost/cost_valid
             if print_cost:
                 print(cost)
 
@@ -71,6 +75,7 @@ class Model:
     def back_prop(self, AL, Y, caches):
         return self.BackProp.model_back_prop(AL, Y, caches)
 
+    # params CRUD
     def load_params(self, path):
         try:
             with open(path, "rb") as f:
@@ -90,6 +95,7 @@ class Model:
             return
 
         self.params = initializer(self.layers_dims)
+    # params CRUD - end
 
     def update_layers_dims(self):
         # init new layer dims with first layer
