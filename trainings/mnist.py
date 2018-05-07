@@ -26,11 +26,14 @@ if __name__ == '__main__':
     X_valid = normalize(test_x)
 
     hyp_params = {
-        'layers_dims': [28 * 28, 50, 10]
+        'epochs': 2000,
+        'learning_rate': 0.05,
+        'layers_dims': [28 * 28, 100, 100, 10],
+        'print_cost': True
     }
 
-    model = Model(layers_dims=[28 * 28, 50, 10])
-    model.train(X.T, Y, 100, 0.001, True, X_valid.T, Y_valid)
+    model = Model(layers_dims=hyp_params['layers_dims'])
+    model.train(X.T, Y, hyp_params['epochs'], hyp_params['learning_rate'], hyp_params['print_cost'], X_valid.T, Y_valid)
 
     pickle_name = '../datasets/mnist/model-alpha-{0}-iterations-{1}-layers-{2}.pickle' \
         .format(hyp_params['learning_rate'], hyp_params['epochs'], str(hyp_params['layers_dims']))
