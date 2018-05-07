@@ -1,10 +1,10 @@
 import numpy as np
-from ActivationUtils import ActivationFns
+from src.ActivationUtils import ActivationFns
 
 
 class ForwardProp:
-    # def __call__(self, X, params):
-    #     return self.model_forward(X, params)
+    outputLayerActivation = ActivationFns.sigmoid
+    hiddenLayersActivation = ActivationFns.relu
     @classmethod
     def model_forward(cls, X, parameters):
         """
@@ -21,14 +21,13 @@ class ForwardProp:
             A_prev = A
             W = parameters['W' + str(l)]
             b = parameters['b' + str(l)]
-            A, cache = cls.forward(A_prev, W, b, ActivationFns.relu)
+            A, cache = cls.forward(A_prev, W, b, cls.hiddenLayersActivation)
             caches.append(cache)
 
-        AL, cache = cls.forward(A, parameters['W' + str(L)], parameters['b' + str(L)], ActivationFns.sigmoid)
+        AL, cache = cls.forward(A, parameters['W' + str(L)], parameters['b' + str(L)], cls.outputLayerActivation)
         caches.append(cache)
 
-        #  todo zmien 10 na rozmiar output layer
-        assert (AL.shape == (10, X.shape[1]))
+        assert (AL.shape == (parameters['W' + str(L)].shape[0], X.shape[1]))
 
         return AL, caches
 

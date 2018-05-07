@@ -1,5 +1,5 @@
 import numpy as np
-from ActivationUtils import ActivationFnsDerivatives
+from src.ActivationUtils import ActivationFnsDerivatives
 
 
 class BackProp:
