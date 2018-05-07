@@ -5,6 +5,7 @@ import numpy as np
 from src.Initializers import Initializers
 from src.ForwardProp import ForwardProp
 from src.BackProp import BackProp
+from src.helpers.learning_curves import LearningCurves
 
 
 class Model:
@@ -14,20 +15,27 @@ class Model:
     def __init__(self, layers_dims, initializer=Initializers.he):
         self.params = []
         self.layers_dims = layers_dims
+        self.LearningCurves = None
 
         if layers_dims:
             self.init_params(initializer)
 
     def predict(self, X):
         """
-        :return: soft-max distribution
+        :return: probability distribution
         """
         AL, _ = self.ForwardProp.model_forward(X, self.params)
         AL_exps = np.exp(AL)
 
         return AL_exps / np.sum(AL_exps, axis=0)
 
-    def train(self, X, Y, epochs, learning_rate, print_cost=False):
+    def train(self, X, Y, epochs, learning_rate, print_cost=False, X_valid=None, Y_valid=None):
+        plot_every = 1
+        self.LearningCurves = LearningCurves(learning_rate)
+        self.LearningCurves.init_plot(plot_every)
+
+        costs_train = []
+        costs_valid = []
         for i in range(0, epochs):
             AL, caches = ForwardProp.model_forward(X, self.params)
 
@@ -41,8 +49,15 @@ class Model:
             # todo: plot same as in functional model
             # todo: allow X_valid,
             # todo: save cost/cost_valid
-            if print_cost:
-                print(cost)
+
+            if print_cost and i % plot_every == 0:
+                if len(X_valid) and len(Y_valid):
+                    AL_valid, _ = self.ForwardProp.model_forward(X_valid, self.params)
+                    cost_valid = self.cost(AL_valid, Y_valid)
+                    costs_valid.append(cost_valid)
+
+                costs_train.append(cost)
+                self.LearningCurves.update_plot(costs_train, i, costs_valid)
 
     def update_params(self, grads, learning_rate):
         L = len(self.params) // 2
@@ -95,6 +110,7 @@ class Model:
             return
 
         self.params = initializer(self.layers_dims)
+
     # params CRUD - end
 
     def update_layers_dims(self):
