@@ -29,7 +29,7 @@ class Model:
 
         return AL_exps / np.sum(AL_exps, axis=0)
 
-    def train(self, X, Y, epochs, learning_rate, print_cost=False, X_valid=None, Y_valid=None):
+    def train(self, X, Y, epochs, learning_rate, print_cost=False, X_valid=[], Y_valid=[]):
         plot_every = 1
         self.LearningCurves = LearningCurves(learning_rate)
         self.LearningCurves.init_plot(plot_every)
@@ -41,15 +41,12 @@ class Model:
 
             cost = self.cost(AL, Y)
 
-            grads = BackProp.model_back_prop(AL, Y, caches)
+            grads = self.BackProp.model_back_prop(AL, Y, caches)
 
             self.update_params(grads, learning_rate)
 
-            # todo: per n iterations
-            # todo: plot same as in functional model
             # todo: allow X_valid,
             # todo: save cost/cost_valid
-
             if print_cost and i % plot_every == 0:
                 if len(X_valid) and len(Y_valid):
                     AL_valid, _ = self.ForwardProp.model_forward(X_valid, self.params)
