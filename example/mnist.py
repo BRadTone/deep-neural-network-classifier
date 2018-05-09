@@ -30,13 +30,12 @@ if __name__ == '__main__':
     hyp_params = {
         'epochs': 100,
         'learning_rate': 0.05,
-        'layers_dims': [28 * 28, 100, 100, 10],
         'print_cost': True
     }
 
-    model = Model(layers_dims=hyp_params['layers_dims'])
+    model = Model(layers_dims=[X.shape[1], 100, 100, Y.shape[0]])
 
-    model.train(X.T, Y, hyp_params['epochs'], hyp_params['learning_rate'], hyp_params['print_cost'], X_valid.T, Y_valid)
+    model.train(X.T, Y, X_valid.T, Y_valid, **hyp_params)
 
     pickle_name = 'saved_models/model-alpha-{0}-iterations-{1}-layers-{2}.pickle' \
         .format(hyp_params['learning_rate'], hyp_params['epochs'], str(hyp_params['layers_dims']))

@@ -29,7 +29,7 @@ class Model:
 
         return AL_exps / np.sum(AL_exps, axis=0)
 
-    def train(self, X, Y, epochs, learning_rate, print_cost=False, X_valid=[], Y_valid=[]):
+    def train(self, X, Y,  X_valid=[], Y_valid=[], epochs=2000, learning_rate=0.001, print_cost=False):
         plot_every = 1
         self.LearningCurves = LearningCurves(learning_rate)
         self.LearningCurves.init_plot(plot_every)

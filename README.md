@@ -14,11 +14,10 @@
 
 #### Setup:
 - Model initialization requires one argument - array of neurons per layer. 
----
-```
-layer_dims=[#features, #1st_hidden_layer_neurons,..., #nth_hidden_layer_neurons, #classes]
-model = Model(layer_dims)
-```
+    ```
+    layer_dims=[#features, #1st_hidden_layer_neurons,..., #nth_hidden_layer_neurons, #classes]
+    model = Model(layer_dims)
+    ```
 
 - call train method with: 
     - traing input - 2d array of ```shape=(#features, #exaples)```
@@ -51,19 +50,19 @@ model = Model(layer_dims)
     
 2. Define hyperparameters:
     ```
-     hyp_params = {
+    hyp_params = {
             'epochs': 100,
             'learning_rate': 0.05,
-            'layers_dims': [28 * 28, 100, 100, 10],
             'print_cost': True
         }
     ```
 
 3. Initialize model and train:
     ```
-    model = Model(layers_dims=hyp_params['layers_dims'])
+     model = Model(layers_dims=[X.shape[1], 100, 100, Y.shape[0]])
+
     
-        model.train(X.T, Y, hyp_params['epochs'], hyp_params['learning_rate'], hyp_params['print_cost'], X_valid.T, Y_valid)
+    model.train(X.T, Y, hyp_params['epochs'], hyp_params['learning_rate'], hyp_params['print_cost'], X_valid.T, Y_valid)
     ```
     ![Watch learning curves during iterations](example/learning_curve_example.png) 
     
