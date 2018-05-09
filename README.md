@@ -26,7 +26,7 @@
 ### [Example](https://github.com/BRadTone/deep-neural-network-classifier/tree/master/example):
 
 1. Prepare data:
-    ```
+    ```python
     with gzip.open('mnist.pkl.gz', 'rb') as f:
         train_set, valid_set, test_set = pickle.load(f, encoding='latin1')
     
@@ -49,7 +49,7 @@
     ```
     
 2. Define hyperparameters:
-    ```
+    ```python
     hyp_params = {
             'epochs': 100,
             'learning_rate': 0.05,
@@ -58,16 +58,16 @@
     ```
 
 3. Initialize model and train:
-    ```
-     model = Model(layers_dims=[X.shape[1], 100, 100, Y.shape[0]])
-
+    ```python
+    model = Model(layers_dims=[X.shape[1], 100, 100, Y.shape[0]])
     
     model.train(X.T, Y, hyp_params['epochs'], hyp_params['learning_rate'], hyp_params['print_cost'], X_valid.T, Y_valid)
     ```
+    - Watch learning curves during iterations
     ![Watch learning curves during iterations](example/learning_curve_example.png) 
     
 4. Save learned paramaters returned by train method:
-    ```
+    ```python
      pickle_name = 'saved_models/model-alpha-{0}-iterations-{1}-layers-{2}.pickle' \
             .format(hyp_params['learning_rate'], hyp_params['epochs'], str(hyp_params['layers_dims']))
     
