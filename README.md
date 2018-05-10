@@ -60,8 +60,8 @@
 3. Initialize model and train:
     ```python
     model = Model(layers_dims=[X.shape[1], 100, 100, Y.shape[0]])
-    
-    model.train(X.T, Y, hyp_params['epochs'], hyp_params['learning_rate'], hyp_params['print_cost'], X_valid.T, Y_valid)
+
+    model.train(X.T, Y, X_valid.T, Y_valid, **hyp_params)
     ```
     - Watch learning curves during iterations
     ![Watch learning curves during iterations](example/learning_curve_example.png) 
